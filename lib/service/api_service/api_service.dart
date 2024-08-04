@@ -7,8 +7,8 @@ class ApiService{
     final requst =
     await _dio.get(_host + path);
     return requst;
-
-  } Future<dynamic> post({required String path, dynamic form}) async {
+  }
+  Future<dynamic> post({required String path, dynamic form}) async {
     final requst =
     await _dio.post(_host + path, data: form);
     return requst;
@@ -37,11 +37,17 @@ class ApiPosts{
     return requst;
   }
   //получение Комментариев поста
-  Future<Response<dynamic>> getCommitsPost({required String postId}) async {
+  Future<Response<dynamic>> getCommetsPost({required String postId}) async {
     String path =
-        "/comments/$postId/comments";
+        "/posts/$postId/comments";
     dynamic requst = await ApiService().get(path: path);
     return requst;
   }
-
+//получение usera
+  Future<dynamic> getUser({required String id}) async {
+    String path =
+        "/users/$id";
+    dynamic requst = await ApiService().get(path: path);
+    return requst;
+  }
 }

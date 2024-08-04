@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 final lateThemDate = ThemeData(
     primaryColor: primaryColor,
     useMaterial3: true,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      //circularTrackColor: progressIndicColor,
+      color: progressIndicColor
+    ),
     appBarTheme: const AppBarTheme(
         backgroundColor: primaryColor,
         titleTextStyle: TextStyle(

@@ -1,8 +1,8 @@
 import 'package:applicant_test_project/features/posts/posts_bloc/posts_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import '../../../constants/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../widgets/widgets.dart';
+import 'widgets/post_card.dart';
 
 class PostsScreen extends StatelessWidget {
   const PostsScreen({super.key, required this.title});
@@ -22,28 +22,33 @@ class PostsScreen extends StatelessWidget {
             title: Text(
               title,
             ),
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(64),
-                child: SearchWidget()),
+            bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(64), child: SearchWidget()),
           ),
           BlocConsumer<PostsBloc, PostsState>(
             listener: (context, state) {
-              // TODO: implement listener
+              //обработка ошибок
             },
             builder: (context, state) {
               return (state is PostsInitial || state is PostsDownload)
-                  ? const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator(color: Colors.cyan,)))
-                  : SliverList.builder(
-                      itemCount: 100,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 2, horizontal: 16),
-                          height: 40,
-                          decoration: BoxDecoration(color:  Colors.cyan),
-
+                  ? const SliverCircProgressIndicator()
+                  : (state is PostsLoaded && state.posts.isNotEmpty)
+                      ? SliverList.builder(
+                          itemCount: state.posts.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return PostWidget(
+                              post: state.posts[index],
+                              onTap: () {
+                                context.read<PostsBloc>().add(
+                                    DownloadPostFullEvent(
+                                        post: state.posts[index]));
+                              },
+                            );
+                          },
+                        )
+                      : const SliverNoValues(
+                          noValues: 'Нет постов!',
                         );
-                      },
-                    );
             },
           ),
         ],

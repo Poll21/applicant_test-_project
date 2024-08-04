@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../constants/constants.dart';
+
+import '../../../widgets/widgets.dart';
+
 
 class ContactsScreen extends StatelessWidget {
   final String title;
