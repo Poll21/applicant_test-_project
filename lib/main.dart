@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'constants/constants.dart';
-import 'features/home_screen/home_screen.dart';
+import 'service/router/router.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _router = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Applicant Test Project',
       theme:lateThemDate,
-      home: const HomeScreen(),
+   routerConfig: _router.config(),
     );
   }
 }
